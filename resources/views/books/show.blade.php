@@ -5,7 +5,7 @@
     <br>
     Judul: {{ $book->title }}
     <br>
-    Penulis: {{ $book->writer_name }}
+    Penulis: {{ $book->writer->name }}
     <br>
     Tahun Terbit: {{ $book->year }}
 

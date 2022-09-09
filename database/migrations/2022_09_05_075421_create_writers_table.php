@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('writers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('writer_id')->constrained('writers')->onDelete('cascade');
-            $table->string('title', 120);
-            $table->string('writer_name', 120);
-            $table->year('year');
+            $table->string('name');
+            $table->string('phone_number')->nullable();
+            $table->string('email')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('writers');
     }
 };

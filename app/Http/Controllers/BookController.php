@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Writer;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -23,17 +24,26 @@ class BookController extends Controller
 
     public function create()
     {
-        return view('books.create');
+        $writers = Writer::all();
+
+        return view('books.create', compact('writers'));
     }
 
     public function store(Request $request)
     {
-        $bookTitle = $request->judul_buku;
-        $bookWriter = $request->penulis;
+        // https://laravel.com/docs/9.x/validation
+
+        $request->validate([
+            'judul_buku' => 'required|min:10|max:120',
+            'penulis' => 'required|min:10|max:120',
+            'email' => 'nullable|email|min:12|max:255',
+            'writer_id' => 'required|numeric',
+        ]);
 
         $book = new Book;
         $book->title = $request->judul_buku;
         $book->writer_name = $request->penulis;
+        $book->writer_id = $request->writer_id;
         $book->year = 2022;
         
         // simpan data ke database

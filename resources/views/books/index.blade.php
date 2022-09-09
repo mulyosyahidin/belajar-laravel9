@@ -16,7 +16,7 @@
         <tr>
             <td>{{ $buku->id }}</td>
             <td>{{ $buku->title }}</td>
-            <td>{{ $buku->writer_name }}</td>
+            <td>{{ $buku->writer->name }}</td>
             <td>{{ $buku->year }}</td>
             <td>
                 <a href="{{ route('books.show', $buku->id) }}">Lihat</a>

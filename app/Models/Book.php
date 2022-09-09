@@ -10,4 +10,9 @@ class Book extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    public function writer()
+    {
+        return $this->hasOne(Writer::class, 'id', 'writer_id');
+    }
 }
