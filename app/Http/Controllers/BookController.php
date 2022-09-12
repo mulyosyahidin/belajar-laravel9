@@ -34,15 +34,14 @@ class BookController extends Controller
         // https://laravel.com/docs/9.x/validation
 
         $request->validate([
-            'judul_buku' => 'required|min:10|max:120',
-            'penulis' => 'required|min:10|max:120',
-            'email' => 'nullable|email|min:12|max:255',
+            'judul_buku' => 'required|min:6|max:120',
+            'year' => 'required|numeric',
             'writer_id' => 'required|numeric',
         ]);
 
         $book = new Book;
         $book->title = $request->judul_buku;
-        $book->writer_name = $request->penulis;
+        $book->writer_name = '{{penulis}}';
         $book->writer_id = $request->writer_id;
         $book->year = 2022;
         
@@ -50,12 +49,13 @@ class BookController extends Controller
         $book->save();
 
         return redirect()
-            ->to(route('books.index'));
+            ->to(route('books.index'))
+            ->with('success', 'Data buku berhasil disimpan');
     }
 
     public function index()
     {
-        $books = Book::all();
+        $books = Book::latest()->get();
 
         return view('books.index',
             compact('books'));
@@ -69,17 +69,21 @@ class BookController extends Controller
 
     public function edit(Book $book)
     {
-        return view('books.edit', compact('book'));
+        $writers = Writer::all();
+
+        return view('books.edit', compact('book', 'writers'));
     }
 
     public function update(Request $request, Book $book)
     {
         $book->title = $request->judul_buku;
-        $book->writer_name = $request->penulis;
+        $book->writer_id = $request->writer_id;
+        $book->year = $request->year;
         $book->save();
 
         return redirect()
-            ->to(route('books.show', $book->id));
+            ->to(route('books.show', $book->id))
+            ->with('success', 'Data buku berhasil diubah');
     }
 
     public function destroy(Book $book)
@@ -87,7 +91,8 @@ class BookController extends Controller
         $book->delete();
 
         return redirect()
-            ->to(route('books.index'));
+            ->to(route('books.index'))
+            ->with('success', 'Data buku berhasil dihapus');
     }
 }
 

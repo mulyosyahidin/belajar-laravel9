@@ -102,14 +102,19 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('themes/sb-admin2/js/sb-admin-2.min.js') }}"></script>
 
-    <!-- Page level plugins -->
-    <script src="{{ asset('themes/sb-admin2/vendor/chart.js/Chart.min.js') }}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('themes/sb-admin2/js/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('themes/sb-admin2/js/demo/chart-pie-demo.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @stack('custom_js')
+
+    @if (session()->has('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session()->get('success') }}',
+            })
+        </script>
+    @endif
 </body>
 
 </html>
