@@ -45,3 +45,6 @@ Route::delete('/books/{book}', [BookController::class, 'destroy'])->name('books.
 Route::get('/admin', function () {
     return view('admin');
 })->name('admin');
+
+
+// ini hari ke-4
